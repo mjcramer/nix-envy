@@ -2,7 +2,7 @@
 
   # https://daiderd.com/nix-darwin/manual/index.html#sec-options
 
-  time.timeZone = "Americas/Los_Angeles";
+  time.timeZone = "America/Los_Angeles";
 
   system = {
 
@@ -23,52 +23,56 @@
       menuExtraClock.Show24Hour = true;
       menuExtraClock.ShowSeconds = true;
 
-      # # https://github.com/LnL7/nix-darwin/blob/master/modules/system/defaults/trackpad.nix
-      # trackpad = {
-      #   # tap to click
-      #   Clicking = true;
-      #   # tap-tap-drag to drag
-      #   Dragging = true;
-      #   # two-finger-tap right click
-      #   TrackpadRightClick = true;
-      # };
+      # https://github.com/LnL7/nix-darwin/blob/master/modules/system/defaults/NSGlobalDomain.nix
+      NSGlobalDomain = {
+        # keyboard navigation in dialogs
+        AppleKeyboardUIMode = 3;
 
-      # # https://github.com/LnL7/nix-darwin/blob/master/modules/system/defaults/NSGlobalDomain.nix
-      # NSGlobalDomain = {
-      #   # keyboard navigation in dialogs
-      #   AppleKeyboardUIMode = 3;
+        AppleShowAllFiles = true;
+        AppleShowAllExtensions = true;
 
-      #   # disable press-and-hold for keys in favor of key repeat
-      #   ApplePressAndHoldEnabled = false;
+        # disable press-and-hold for keys in favor of key repeat
+        ApplePressAndHoldEnabled = false;
 
-      #   # fast key repeat rate when hold
-      #   KeyRepeat = 2;
-      #   InitialKeyRepeat = 15;
-      # };
+        # fast key repeat rate when hold
+        KeyRepeat = 2;
+        InitialKeyRepeat = 15;
+      };
 
       # killall Dock to make them have effect
       # https://github.com/LnL7/nix-darwin/blob/master/modules/system/defaults/dock.nix
-      # dock = {
-      #   autohide = true;
-      #   magnification = true;
-      #   # most recently used spaces
-      #   mru-spaces = false;
-      #   tilesize = 32;
-      #   largesize = 96;
-      # };
+      dock = {
+        autohide = true;
+        magnification = true;
+        # most recently used spaces
+        mru-spaces = false;
+        tilesize = 32;
+        largesize = 96;
+      };
 
       # https://github.com/LnL7/nix-darwin/blob/master/modules/system/defaults/finder.nix
-      # finder = {
-      #   # bottom status bar
-      #   ShowStatusBar = true;
-      #   ShowPathbar = true;
-
-      #   # default to list view
-      #   FXPreferredViewStyle = "Nlsv";
-      #   # full path in window title
-      #   _FXShowPosixPathInTitle = true;
-      # };
+      finder = {
+        AppleShowAllFiles = true;
+        AppleShowAllExtensions = true;
+        # bottom status bar
+        ShowStatusBar = true;
+        ShowPathbar = true;
+        FXDefaultSearchScope = "SCcf";
+        # default to list view
+        FXPreferredViewStyle = "Nlsv";
+        # sort folders first
+        _FXSortFoldersFirst = true;
+        # no need to be warned about changing file extensions
+        FXEnableExtensionChangeWarning = false;
+        # full path in window title
+        _FXShowPosixPathInTitle = true;
+      };
     };
+
+    # WindowManager = {
+    #   AutoHide = true;
+    #   AppWindowGroupingBehavior = false;
+    # };
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog

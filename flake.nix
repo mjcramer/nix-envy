@@ -5,30 +5,25 @@
   inputs = {
     # nixpkgs for packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.11-darwin";
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
     darwin = {
       url = "github:lnl7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
-    # home-manager = {
-    #   url = "github:nix-community/home-manager/release-23.11";
-    #   inputs.nixpkgs.follows = "nixpkgs-darwin";
-    # };
 
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs-locked.url =
-    #   "github:NixOS/nixpkgs/1042fd8b148a9105f3c0aca3a6177fd1d9360ba5";
-
-    # nix-home-manager.url = "github:torgeir/nix-home-manager";
-    # dotfiles.url = "github:torgeir/dotfiles";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, darwin, home-manager, nix-home-manager, dotfiles, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }: {
     # Build darwin flake using:
     # `darwin-rebuild build --flake .#jozibean`
+    
+
     darwinConfigurations = {
-      jozibean = nix-darwin.lib.darwinSystem {
+      "jozibean" = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
         specialArgs = { inherit inputs; };
         modules = [
@@ -61,20 +56,22 @@
           # }
           ./modules/nix-core.nix
           ./modules/system.nix
-          # ./modules/apps.nix
+          ./modules/apps.nix
           ./modules/host-users.nix
-          # home-manager.darwinModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.torgeir = import ./home;
-          #   home-manager.extraSpecialArgs = {
-          #     inherit inputs;
-          #     dotfiles = dotfiles;
-          #     # hack around nix-home-manager causing infinite recursion
-          #     isLinux = false;
-          #   };
-          # }
+
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.verbose = true;
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.cramer = import ./home;
+            # home-manager.extraSpecialArgs = {
+            #   inherit inputs;
+            #   # dotfiles = dotfiles;
+            #   # hack around nix-home-manager causing infinite recursion
+            #   # isLinux = false;
+            # };
+          }
         ];
       };
     };

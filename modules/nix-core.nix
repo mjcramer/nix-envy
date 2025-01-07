@@ -5,13 +5,17 @@
 
   # auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
   programs.nix-index.enable = true;
 
   # clean up every once in a while
   nix.gc.automatic = true;
-  # gets rid of duplicate store files
-  # turned off due to
+  # gets rid of duplicate store files turned off due to
   # https://github.com/NixOS/nix/issues/7273#issuecomment-1325073957
   nix.settings.auto-optimise-store = false;
   # nix store optimise (manually instead)
@@ -19,7 +23,7 @@
   # linux builder
   # https://nixcademy.com/2024/02/12/macos-linux-builder/
   # root was here previously, @admin is for linux-builder
-  nix.settings.trusted-users = [ "root" "@admin" ];
+  # nix.settings.trusted-users = [ "root" "@admin" ];
   # sudo launchctl list org.nixos.linux-builder
   # sudo launchctl stop org.nixos.linux-builder
   # nix.linux-builder = {

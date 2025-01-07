@@ -6,9 +6,31 @@
 
   # install packages from nix's official package repository.
   environment.systemPackages = with pkgs; [
+    awscli
+    bash
+    curl
+    fd
+    fish
+    fzf
     git
+    gnugrep
+    htop
+    iftop
+    # jenv
+    jq # json query
+    lsd # much better ls
     nil # nix language server
-    nixfmt # https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-fmt#examples
+    openssh
+    python3
+    scala
+    sbt
+    # terraform
+    tmux
+    tree
+    vim
+    watch
+    wget
+    zsh
   ];
 
   # To make this work, homebrew need to be installed manually, see
@@ -17,33 +39,33 @@
   # apps than nixpkgs, especially for GUI apps!
 
   # work mac comes with brew
-  homebrew = {
-    enable = true;
+  # homebrew = {
+  #   enable = true;
 
-    onActivation = {
-      autoUpdate = true;
-      # 'zap': uninstalls all formulae(and related files) not listed here.
-      cleanup = "zap";
-    };
+  #   onActivation = {
+  #     autoUpdate = true;
+  #     # 'zap': uninstalls all formulae(and related files) not listed here.
+  #     cleanup = "zap";
+  #   };
 
-    taps = [ "CtrlSpice/homebrew-otel-desktop-viewer" ];
+  #   taps = [ "CtrlSpice/homebrew-otel-desktop-viewer" ];
 
-    # brew install
-    brews = [ "otel-desktop-viewer" ];
+  #   # brew install
+  #   brews = [ "otel-desktop-viewer" ];
 
-    # brew install --cask
-    # these need to be updated manually
-    casks = [ "swiftbar" "spotify" "zoom" "intellij-idea" ];
+  #   # brew install --cask
+  #   # these need to be updated manually
+  #   casks = [ "swiftbar" "spotify" "zoom" "intellij-idea" ];
 
-    # mac app store
-    # click
-    masApps = {
-      amphetamine = 937984704;
-      kindle = 302584613;
-      tailscale = 1475387142;
+  #   # mac app store
+  #   # click
+  #   masApps = {
+  #     amphetamine = 937984704;
+  #     kindle = 302584613;
+  #     tailscale = 1475387142;
 
-      # useful for debugging macos key codes
-      #key-codes = 414568915;
-    };
-  };
+  #     # useful for debugging macos key codes
+  #     #key-codes = 414568915;
+  #   };
+  # };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, home-manager, ... }:
 
 let
   hostname = "jozibean";
@@ -12,5 +12,6 @@ in {
   users.users."${username}" = {
     home = "/Users/${username}";
     description = username;
+    shell = pkgs.fish;
   };
 }
