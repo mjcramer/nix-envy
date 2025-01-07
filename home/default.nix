@@ -9,8 +9,11 @@ in {
     stateVersion = "24.11";
 
     # file.".terraform.d/plugin-cache/".directory = true;
-    file.".terraformrc".source = ./dotfiles/terraformrc;
+    # file.".terraformrc".source = ./dotfiles/terraformrc;
   };
+  home.file.".sbt/".source = ./dotfiles/sbt; 
+  home.file.".sbt/".recursive = true;     
+
 
   programs.git = {
     enable = true;
