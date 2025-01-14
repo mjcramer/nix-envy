@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# Remove nix-profile start lines from these files:
+sudo vi /etc/zshrc
+sudo vi /etc/bashrc
+sudo vi /etc/bash.bashrc
+sudo rm /etc/*.backup-before-nix
+
+# Unload daemon
+sudo launchctl unload /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+sudo rm /Library/LaunchDaemons/org.nixos.nix-daemon.plist
+sudo launchctl unload /Library/LaunchDaemons/org.nixos.darwin-store.plist
+sudo rm /Library/LaunchDaemons/org.nixos.darwin-store.plist
+
+# Remove groups
+sudo dscl . -delete /Groups/nixbld
+for u in $(sudo dscl . -list /Users | grep _nixbld); do sudo dscl . -delete /Users/$u; done
+
+# Remove nix mount
+sudo vifs
+
+sudo rm /etc/synthetic.conf*
+sudo rm -rf /etc/nix /var/root/.nix-profile /var/root/.nix-defexpr /var/root/.nix-channels ~/.nix-profile ~/.nix-defexpr ~/.nix-channels
+sudo diskutil apfs deleteVolume /nix

@@ -1,10 +1,12 @@
-# nix-darwin
+# nix-envy
 
+This project subsumes the [envy](https://github.com/mjcramer/envy) respository, which is where I used to keep my environment configuration, scripts and other minutia that I carry around from machine to machine. Some of its features include:
+ - common programs and utilities
+ - fish shell configuration
 
 ## first time setup
 
 - Install [[https://nixos.org/download.html#nix-install-macos][Nix, multi-user installation]].
-- Install [[https://brew.sh/][Homebrew]]. Not strictly nescessary, but some apps are not in [[https://search.nixos.org/packages][nixpkgs]], and nix integrates nicely with homebrew.
 - Borrow nescessary parts off of the [[https://github.com/ryan4yin/nix-darwin-kickstarter/tree/main/minimal][nix-darwin-kickstarter/minimal]], and put it in =~/.config/nix-darwin= (this repo).
 - [[https://github.com/LnL7/nix-darwin/blob/master/README.md#step-2-installing-nix-darwin][Install nix-darwin]], using nix it self, and nix flakes
 

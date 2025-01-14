@@ -1,92 +1,67 @@
 { config, inputs, pkgs, lib, ... }:
 
-let dotfiles = "something"; # inputs.dotfiles;
+let 
+  # Directory containing dotfiles that aren't managed by nix
+  dotfiles = ./dotfiles;
+  # Read all script files and create Nix scripts
+  scriptsDir = ./scripts;
+  # scripts = pkgs.buildEnv {
+  #   name = "scripts";
+  #   paths = lib.concatMap (scriptFile: [
+  #     (pkgs.writeShellScriptBin (lib.strings.removeSuffix ".sh" (lib.strings.baseName scriptFile)) (builtins.readFile "${scriptsDir}/${scriptFile}"))
+  #   ]) (builtins.attrValues (builtins.readDir scriptsDir));
+  # };
 in {
-
   home = {
     username = "cramer";
     homeDirectory = "/Users/cramer";
     stateVersion = "24.11";
-
-    # file.".terraform.d/plugin-cache/".directory = true;
-    # file.".terraformrc".source = ./dotfiles/terraformrc;
   };
+
+  # home.packages = [
+  #   (pkgs.python3.withPackages (ppkgs: [
+  #     ppkgs.termcolor
+  #     ppkgs.GitPython      
+  #     ppkgs.numpy
+  #     ppkgs.pytorch
+  #   ]))
+  # ];
+
+  # Add the scripts to the PATH
+  # home.sessionVariables.PATH = "${scripts}/bin:${config.home.sessionVariables.PATH}";
+
   home.file.".sbt/".source = ./dotfiles/sbt; 
-  home.file.".sbt/".recursive = true;     
+  home.file.".sbt/".recursive = true;
 
+  # home.file.".terraform.d/plugin-cache/".directory = true;
+  # home.file.".terraformrc".source = ./dotfiles/terraformrc;
+  # home.file.".screenrc".source = ./dotfiles/screenrc;
 
-  programs.git = {
-    enable = true;
-    userName = "Michael Cramer";
-    userEmail = "mjcramer@gmail.com";
-    aliases = {
-      unstage = "reset HEAD";
-      undo-commit = "reset --soft HEAD^";
-      poh = "push origin HEAD";
-      puh = "pull origin HEAD";
-      set-upstream = "!git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`";
-    };
+  programs.fish = import ./programs/fish.nix { inherit pkgs; };
+  programs.git = import ./programs/git.nix;
+  programs.htop = import ./programs/htop.nix;
 
-    extraConfig = {
-      core = {
-        editor = "vim";
-        autocrlf = "input";
-        excludesfile = "/Users/cramer/.gitignore_global";
-      };
-      color = { 
-      	ui = true;
-      };
-      init = {
-	      defaultBranch = "main";
-      };
-      push = { 
-        autoSetupRemote = true; 
-      	default = "current";
-      };
-      pull = { 
-        rebase = true;
-      };
-      branch = { 
-      	autosetuprebase = "always";
-      };
-      diff = { 
-        tool = "bcomp";
-      };
-      difftool = { 
-      	prompt = false;
-        bcomp = {
-          trustExitCode = true;
-          cmd = "/usr/local/bin/bcomp $LOCAL $REMOTE";
-        };
-      };
-      merge = {
-        tool = "bcomp";
-      };
-      mergetool = {
-        prompt = false;
-        bcomp = {
-          trustExitCode = true;
-          cmd = "/usr/local/bin/bcomp $LOCAL $REMOTE $BASE $MERGED";
-        };
-      };
-      filter = {
-        lfs = {
-          clean = "git-lfs clean -- %f";
-          smudge = "git-lfs smudge -- %f";
-          process = "git-lfs filter-process";
-          required = true;
-        };
-      };  
-      url = {
-        "ssh://git@github.com/" = {
-        	insteadOf = "https://github.com/";
-        };
-      };
-    };
-  };
+  # home.file = {
+  #   ".config/dotfiles".source = dotfiles;
+  #   ".config/dotfiles".onChange = ''
+  #     echo "Fixing swiftbar path"
+  #     /usr/bin/defaults write com.ameba.Swiftbar PluginDirectory \
+  #       $(/etc/profiles/per-user/torgeir/bin/readlink ~/.config/dotfiles)/swiftbar/scripts
+  #     echo swiftbar plugin directory is $(/usr/bin/defaults read com.ameba.Swiftbar PluginDirectory)
+  #   '';
 
+  #   "Library/KeyBindings/DefaultKeyBinding.dict".source = dotfiles
+  #     + "/DefaultKeyBinding.dict";
 
+  #   ".ideavimrc".source = dotfiles + "/ideavimrc";
 
+  #   ".yabairc".source = dotfiles + "/yabairc";
+  #   ".yabairc".onChange =
+  #     "/etc/profiles/per-user/torgeir/bin/yabai --restart-service";
+
+  #   ".skhdrc".source = dotfiles + "/skhdrc";
+  #   ".skhdrc".onChange =
+  #     "/etc/profiles/per-user/torgeir/bin/skhd --restart-service";
 
 
 
@@ -134,27 +109,8 @@ in {
   #   pkgs.unstable.skhd
   # ];
 
-  # # TODO hardware.keyboard.zsa.enable
-
-  # home.file = {
-  #   ".config/dotfiles".source = dotfiles;
-  #   ".config/dotfiles".onChange = ''
-  #     echo "Fixing swiftbar path"
-  #     /usr/bin/defaults write com.ameba.Swiftbar PluginDirectory \
-  #       $(/etc/profiles/per-user/torgeir/bin/readlink ~/.config/dotfiles)/swiftbar/scripts
-  #     echo swiftbar plugin directory is $(/usr/bin/defaults read com.ameba.Swiftbar PluginDirectory)
-  #   '';
-
-  #   "Library/KeyBindings/DefaultKeyBinding.dict".source = dotfiles
-  #     + "/DefaultKeyBinding.dict";
-
-  #   ".ideavimrc".source = dotfiles + "/ideavimrc";
-
-  #   ".yabairc".source = dotfiles + "/yabairc";
-  #   ".yabairc".onChange =
-  #     "/etc/profiles/per-user/torgeir/bin/yabai --restart-service";
-
-  #   ".skhdrc".source = dotfiles + "/skhdrc";
-  #   ".skhdrc".onChange =
-  #     "/etc/profiles/per-user/torgeir/bin/skhd --restart-service";
+# We need to run tide configure after activation to set up our prompts
+home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  ${pkgs.fish}/bin/fish -c "# tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Round --powerline_prompt_heads=Round --powerline_prompt_tails=Slanted --powerline_prompt_style='Two lines, frame' --prompt_connection=Dotted --powerline_right_prompt_frame=Yes --prompt_connection_andor_frame_color=Darkest --prompt_spacing=Sparse --icons='Many icons' --transient=Yes"
+'';
 }

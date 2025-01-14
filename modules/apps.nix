@@ -14,6 +14,7 @@
     fzf
     git
     gnugrep
+    grc
     htop
     iftop
     # jenv

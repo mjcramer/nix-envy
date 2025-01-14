@@ -1,27 +1,22 @@
 {
-  description = "Cramer's darwin system";
+  description = "Cramer's Macbook";
 
-  # format https://nixos.org/manual/nix/stable/command-ref/new-cli/nix3-flake.html#examples
   inputs = {
-    # nixpkgs for packages
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
-    darwin = {
-      url = "github:lnl7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
   outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }: {
     # Build darwin flake using:
     # `darwin-rebuild build --flake .#jozibean`
-    
-
     darwinConfigurations = {
       "jozibean" = nix-darwin.lib.darwinSystem {
         system = "x86_64-darwin";
@@ -59,11 +54,11 @@
           ./modules/apps.nix
           ./modules/host-users.nix
 
-          home-manager.darwinModules.home-manager
-          {
+          home-manager.darwinModules.home-manager {
             home-manager.verbose = true;
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "nix-backup";
             home-manager.users.cramer = import ./home;
             # home-manager.extraSpecialArgs = {
             #   inherit inputs;
