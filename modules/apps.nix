@@ -39,25 +39,6 @@
   # not reproducible!  But on macOS, homebrew has a much larger selection of
   # apps than nixpkgs, especially for GUI apps!
 
-  # work mac comes with brew
-  # homebrew = {
-  #   enable = true;
-
-  #   onActivation = {
-  #     autoUpdate = true;
-  #     # 'zap': uninstalls all formulae(and related files) not listed here.
-  #     cleanup = "zap";
-  #   };
-
-  #   taps = [ "CtrlSpice/homebrew-otel-desktop-viewer" ];
-
-  #   # brew install
-  #   brews = [ "otel-desktop-viewer" ];
-
-  #   # brew install --cask
-  #   # these need to be updated manually
-  #   casks = [ "swiftbar" "spotify" "zoom" "intellij-idea" ];
-
   #   # mac app store
   #   # click
   #   masApps = {
