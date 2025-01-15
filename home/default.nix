@@ -11,12 +11,14 @@ let
       recursive = true; # This has no effect if its a file
     };
   }) dotfileNames);
+  
   templates = {
     "templates" = {
       source = ./templates;
       target = "link";
     };
   };
+
   # Read all script files and create Nix scripts
   scriptsDir = ./scripts;
   # scripts = pkgs.buildEnv {
@@ -25,6 +27,7 @@ let
   #     (pkgs.writeShellScriptBin (lib.strings.removeSuffix ".sh" (lib.strings.baseName scriptFile)) (builtins.readFile "${scriptsDir}/${scriptFile}"))
   #   ]) (builtins.attrValues (builtins.readDir scriptsDir));
   # };
+  
 in {
   home = {
     username = "cramer";
