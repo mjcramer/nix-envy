@@ -28,7 +28,7 @@
     # terraform
     tmux
     tree
-    vim
+    vim_configurable
     watch
     wget
     zsh
@@ -70,3 +70,14 @@
   #   };
   # };
 }
+
+
+    # "iTerm" "https://iterm2.com/downloads/stable/iTerm2-3_4_23.zip"
+    # "Slack" "https://downloads.slack-edge.com/releases/macos/4.36.140/prod/universal/Slack-4.36.140-macOS.dmg"
+    # "1Password" "https://downloads.1password.com/mac/1Password.zip"
+    # "Zoom" "https://zoom.us/client/5.17.11.31580/zoomusInstallerFull.pkg"
+    # "Spotify" "https://download.scdn.co/SpotifyInstaller.zip"
+    # # "Intellij Idea" "https://www.jetbrains.com/idea/download/download-thanks.html?platform=mac"
+    # # "Firefox" "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"
+    # "SizeUp" "https://www.irradiatedsoftware.com/downloads/?file=SizeUp.zip"
+    # "VS Code" "https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal"

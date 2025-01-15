@@ -97,3 +97,20 @@
   #   [[ -f ${homeManagerSessionVars} ]] && source ${homeManagerSessionVars}
   # '';
 }
+
+    # echo "Setting Finder to show full path in title."
+    # defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+    # killall Finder
+
+    # echo "Setting Finder to show all files."
+    # defaults write com.apple.Finder AppleShowAllFiles YES
+    # killall Finder
+
+# setup_fonts() {
+#   pushd /Library/Fonts
+#   for font in mesloLGS_NF_regular mesloLGS_NF_bold mesloLGS_NF_italic mesloLGS_NF_bold_italic; do
+#     echo "Downloading $font font..."
+#     wget -q https://github.com/IlanCosman/tide/blob/assets/fonts/$font.ttf?raw=true $font.ttf
+#   done
+#   popd
+# }

@@ -1,4 +1,7 @@
-  { pkgs, ... }: {
+# ./home/programs/fish.nix
+{ config, pkgs, lib, ... }: {
+
+  programs.fish = {
     enable = true;
 
     plugins = [
@@ -57,7 +60,7 @@
       search = {
         description = "Search code files for matching regex";
         body = ''
-        	find $argv[1] -type f -exec grep -EHIn --color=auto $argv[2] {} \;
+          find $argv[1] -type f -exec grep -EHIn --color=auto $argv[2] {} \;
         '';
       };
       gitignore = {
@@ -102,18 +105,24 @@
       end
     '';
 
-# # Adds path element to path if not already contained
-# function add_paths_to_fish_user_paths
-#     # Loop through each path in the list
-#     for path in $argv
-#         # Check if the path is already in user paths 
-#         if not contains $path $fish_user_paths
-#           set -Ua fish_user_paths $path 
-#           echo "Added $path to fish_user_paths..."
-#         end
-#     end
-# end
+    # # Adds path element to path if not already contained
+    # function add_paths_to_fish_user_paths
+    #     # Loop through each path in the list
+    #     for path in $argv
+    #         # Check if the path is already in user paths 
+    #         if not contains $path $fish_user_paths
+    #           set -Ua fish_user_paths $path 
+    #           echo "Added $path to fish_user_paths..."
+    #         end
+    #     end
+    # end
 
-# # Set up path
-# add_paths_to_fish_user_paths /opt/homebrew/bin ~/envy/bin ~/go/bin /usr/local/bin 
+    # # Set up path
+    # add_paths_to_fish_user_paths /opt/homebrew/bin ~/envy/bin ~/go/bin /usr/local/bin 
+  };
+
+  # We need to run tide configure after activation to set up our prompts
+  home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    ${pkgs.fish}/bin/fish -c "# tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Round --powerline_prompt_heads=Round --powerline_prompt_tails=Slanted --powerline_prompt_style='Two lines, frame' --prompt_connection=Dotted --powerline_right_prompt_frame=Yes --prompt_connection_andor_frame_color=Darkest --prompt_spacing=Sparse --icons='Many icons' --transient=Yes"
+  '';
 }
