@@ -8,8 +8,7 @@ This project subsumes the [envy](https://github.com/mjcramer/envy) respository, 
 ## first time setup
 
 - Install [[https://nixos.org/download.html#nix-install-macos][Nix, multi-user installation]].
-- Borrow nescessary parts off of the [[https://github.com/ryan4yin/nix-darwin-kickstarter/tree/main/minimal][nix-darwin-kickstarter/minimal]], and put it in =~/.config/nix-darwin= (this repo).
-- [[https://github.com/LnL7/nix-darwin/blob/master/README.md#step-2-installing-nix-darwin][Install nix-darwin]], using nix it self, and nix flakes
+- Install [[https://github.com/LnL7/nix-darwin/blob/master/README.md#step-2-installing-nix-darwin][nix-darwin]], using nix itself, and nix flakes.
 
 ```shell
 nix --extra-experimental-features 'nix-command flakes' \
