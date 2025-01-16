@@ -1,7 +1,6 @@
 { config, inputs, pkgs, lib, ... }:
 
 let 
-  # Directory containing dotfiles that aren't managed by nix
   dotfilesDir = ./dotfiles;
   dotfileNames = builtins.attrNames (builtins.readDir dotfilesDir);
   dotfiles = builtins.listToAttrs (map (name: {
@@ -15,7 +14,7 @@ let
   templates = {
     "templates" = {
       source = ./templates;
-      target = "link";
+      recursive = true;
     };
   };
 
@@ -29,18 +28,19 @@ let
   # };
   
 in {
+
   home = {
     username = "mjcramer";
     homeDirectory = "/Users/mjcramer";
     stateVersion = "24.11";
   };
 
-  home.file = dotfiles // templates; 
+  home.file = dotfiles // templates;
 
   # home.packages = [
   #   (pkgs.python3.withPackages (ppkgs: [
   #     ppkgs.termcolor
-  #     ppkgs.GitPython      
+  #     ppkgs.GitPython
   #     ppkgs.numpy
   #     ppkgs.pytorch
   #   ]))

@@ -16,6 +16,52 @@
 
   outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }: {
     # Build darwin flake using:
+
+
+#    darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
+#            darwin.lib.darwinSystem {
+#              inherit system;
+#              specialArgs = inputs;
+#              modules = [
+#                home-manager.darwinModules.home-manager
+#                nix-homebrew.darwinModules.nix-homebrew
+#                {
+#                  nix-homebrew = {
+#                    inherit user;
+#                    enable = true;
+#                    taps = {
+#                      "homebrew/homebrew-core" = homebrew-core;
+#                      "homebrew/homebrew-cask" = homebrew-cask;
+#                      "homebrew/homebrew-bundle" = homebrew-bundle;
+#                    };
+#                    mutableTaps = false;
+#                    autoMigrate = true;
+#                  };
+#                }
+#                ./hosts/darwin
+#              ];
+#            }
+#          );
+#          nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system:
+#            nixpkgs.lib.nixosSystem {
+#              inherit system;
+#              specialArgs = inputs;
+#              modules = [
+#                disko.nixosModules.disko
+#                home-manager.nixosModules.home-manager {
+#                  home-manager = {
+#                    useGlobalPkgs = true;
+#                    useUserPackages = true;
+#                    users.${user} = import ./modules/nixos/home-manager.nix;
+#                  };
+#                }
+#                ./hosts/nixos
+#              ];
+#            }
+#          );
+#        };
+
+
     # `darwin-rebuild build --flake .#jozibean`
     darwinConfigurations = {
       "jozibean" = nix-darwin.lib.darwinSystem {
