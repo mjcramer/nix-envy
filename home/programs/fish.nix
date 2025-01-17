@@ -121,6 +121,8 @@
     # add_paths_to_fish_user_paths /opt/homebrew/bin ~/envy/bin ~/go/bin /usr/local/bin 
   };
 
+  home.sessionPath = [ "/Applications/IntelliJ IDEA.app/Contents/MacOS" ];
+
   # We need to run tide configure after activation to set up our prompts
   home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
     ${pkgs.fish}/bin/fish -c "echo 'Configuring tide'; tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Round --powerline_prompt_heads=Round --powerline_prompt_tails=Slanted --powerline_prompt_style='Two lines, frame' --prompt_connection=Dotted --powerline_right_prompt_frame=Yes --prompt_connection_andor_frame_color=Darkest --prompt_spacing=Sparse --icons='Many icons' --transient=Yes"
