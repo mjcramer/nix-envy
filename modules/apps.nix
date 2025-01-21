@@ -25,6 +25,7 @@
     python3
     scala
     sbt
+    maven
     # terraform
     tmux
     tree
