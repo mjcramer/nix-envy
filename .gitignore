@@ -1,5 +1,9 @@
+
+test.nix
+
 # Intellij Idea
 .idea
 
 # Miscellaneous
 /.DS_Store
+
