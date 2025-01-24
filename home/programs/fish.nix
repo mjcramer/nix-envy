@@ -1,6 +1,10 @@
 # ./home/programs/fish.nix
 { config, pkgs, lib, ... }: {
 
+  home.packages = with pkgs; [
+    direnv
+  ];
+
   programs.fish = {
     enable = true;
 
@@ -96,6 +100,8 @@
       alias pingfast='ping -c 100 -s.2'
       alias ls='lsd'
       alias now='date +"%T"'
+
+      direnv hook fish | source
     '';
 
     shellInitLast = ''
