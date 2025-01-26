@@ -4,6 +4,7 @@
 
   time.timeZone = "America/Los_Angeles";
 
+#security.pam.enableSudoTouchIdAuth = true;
   system = {
 
     # activationScripts are executed every time you boot the system

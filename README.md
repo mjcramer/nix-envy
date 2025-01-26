@@ -1,4 +1,4 @@
-# nix-envy
+ nix-envy
 
 This project subsumes the [envy](https://github.com/mjcramer/envy) respository, which is where I used to keep my environment configuration, scripts and other minutia that I carry around from machine to machine. Some of its features include:
 
@@ -12,7 +12,7 @@ This project subsumes the [envy](https://github.com/mjcramer/envy) respository, 
 
 ```shell
 nix --extra-experimental-features 'nix-command flakes' \
-  run nix-darwin -- switch --flake nix-darwin
+  run nix-darwin -- switch --flake . 
 ```
 
 ** build the system and switch to it

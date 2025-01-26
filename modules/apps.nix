@@ -18,6 +18,7 @@
     htop
     iftop
     # jenv
+    jetbrains.idea-ultimate
     jq # json query
     lsd # much better ls
     nil # nix language server

@@ -1,9 +1,9 @@
 # ./home/programs/fish.nix
 { config, pkgs, lib, ... }: {
 
-  home.packages = with pkgs; [
-    direnv
-  ];
+  #home.packages = with pkgs; [
+  #  direnv
+  #];
 
   programs.fish = {
     enable = true;

@@ -1,5 +1,5 @@
 {
-  description = "Cramer's Macbook";
+  description = "Cramer's Workstation Environment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
@@ -89,7 +89,7 @@
         ];
       };
       "oxford-corp-cramer" = nix-darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
+        system = "aarch64-darwin";
         specialArgs = { inherit inputs; };
         modules = [
           ./modules/nix-core.nix
