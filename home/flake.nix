@@ -22,8 +22,12 @@
         # the path to your home.nix.
         modules = [ ./. ];
 
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        # Optionally use extraSpecialArgs to pass through arguments to home.nix
+        extraSpecialArgs = {
+          vars = {
+            inherit username;
+          };
+        };
       };
     };
 }

@@ -76,6 +76,7 @@ in {
 
   imports = [
     ./programs/fish.nix
+    ./programs/zsh.nix
     ./programs/git.nix
     ./programs/htop.nix
     ./programs/vim.nix
