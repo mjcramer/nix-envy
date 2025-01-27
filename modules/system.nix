@@ -4,7 +4,11 @@
 
   time.timeZone = "America/Los_Angeles";
 
-#security.pam.enableSudoTouchIdAuth = true;
+  # networking.hostName = hostname;
+  # networking.computerName = hostname;
+  # system.defaults.smb.NetBIOSName = hostname;
+
+
   system = {
 
     # activationScripts are executed every time you boot the system

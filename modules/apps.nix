@@ -1,12 +1,8 @@
 { inputs, pkgs, ... }: {
 
-  environment.extraInit = ''
-    export PATH=$HOME/bin:$PATH
-  '';
-
   # install packages from nix's official package repository.
   environment.systemPackages = with pkgs; [
-    awscli
+    # awscli
     bash
     curl
     fd
@@ -17,29 +13,28 @@
     grc
     htop
     iftop
-    # jenv
-    jetbrains.idea-ultimate
+    # jetbrains.idea-ultimate
     jq # json query
     lsd # much better ls
+    neovim # modern vim 
     nil # nix language server
     openssh
     python3
-    scala
-    sbt
-    maven
+    # scala
+    # sbt
+    # maven
     # terraform
     tmux
     tree
-    vim_configurable
     watch
     wget
     zsh
   ];
 
-  # To make this work, homebrew need to be installed manually, see
-  # https://brew.sh The apps installed by homebrew are not managed by nix, and
-  # not reproducible!  But on macOS, homebrew has a much larger selection of
-  # apps than nixpkgs, especially for GUI apps!
+  environment.extraInit = ''
+    export PATH=$HOME/bin:$PATH
+  '';
+
 
   #   # mac app store
   #   # click
