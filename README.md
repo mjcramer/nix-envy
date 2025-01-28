@@ -1,19 +1,23 @@
- nix-envy
+# nix-envy
 
-This project subsumes the [envy](https://github.com/mjcramer/envy) respository, which is where I used to keep my environment configuration, scripts and other minutia that I carry around from machine to machine. Some of its features include:
+This project subsumes the [envy](https://github.com/mjcramer/envy) respository, which is where I used to keep my environment configuration, scripts and other minutia that I carry around from machine to machine. I am endeavoring to turn it into a declarative workstation configuration by which I can quickly (re)provision any of my machines. Its functions include:
 
- - common programs and utilities
- - shell configuration
+ - Installing all the common programs and utilities that I need for typical operation
+ - Configure my shell and set up my prompts 
+ - Install my custom scripts and templates
 
-## first time setup
+# Initial Installation and Set-up 
 
 - Install [[https://nixos.org/download.html#nix-install-macos][Nix, multi-user installation]].
-- Install [[https://github.com/LnL7/nix-darwin/blob/master/README.md#step-2-installing-nix-darwin][nix-darwin]], using nix itself, and nix flakes.
+  ```shell
+  sh <(curl -L https://nixos.org/nix/install)
+  ```
+  For maximal pain management, I'm going with the official installer. I tried the [Determinate Systems Installer](https://determinate.systems/nix-installer/) but it did not play nicely with nix-darwin.
 
-```shell
-nix --extra-experimental-features 'nix-command flakes' \
-  run nix-darwin -- switch --flake . 
-```
+- Build the [nix-darwin](https://github.com/LnL7/nix-darwin) flake in this repository, using one of the following commands.
+  ```shell
+  nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake . 
+  ```
 
 ** build the system and switch to it
 

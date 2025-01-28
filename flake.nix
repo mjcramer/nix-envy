@@ -22,7 +22,7 @@
           username = "cramer";
         };
         oxford-corp-cramer = {
-          system = "x86_64-darwin";
+          system = "aarch64-darwin";
           username = "mjcramer";
         };
       };
@@ -64,7 +64,7 @@
           username = "cramer";
         };
         "oxford-corp-cramer" = mkDarwinSystem { 
-          system = "x86_64-darwin";
+          system = "aarch64-darwin";
           hostname = "oxford-corp-cramer";
           username = "mjcramer";
         };
