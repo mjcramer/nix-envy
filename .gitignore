@@ -1,5 +1,7 @@
 
+# Nix artifacts
 test.nix
+result
 
 # Intellij Idea
 .idea
