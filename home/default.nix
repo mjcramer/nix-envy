@@ -1,4 +1,4 @@
-{ config, pkgs, vars, ... }:
+{ config, pkgs, lib, vars, ... }:
 
 let 
   username = vars.username;
@@ -81,4 +81,11 @@ in {
     ./programs/htop.nix
     ./programs/vim.nix
   ];
+
+  # home.exitShell = lib.mkIf (config.home.enableUninstall) {
+  #   script = ''
+  #     echo "Cleaning up dotfiles..."
+  #     ${builtins.concatStringsSep "\n" (map (name: "echo Removing $HOME/.${name}") (builtins.attrNames dotfiles))
+  #   '';
+  # };
 }

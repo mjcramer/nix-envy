@@ -2,7 +2,6 @@
 
   # install packages from nix's official package repository.
   environment.systemPackages = with pkgs; [
-    # awscli
     bash
     curl
     fd
@@ -20,15 +19,18 @@
     nil # nix language server
     openssh
     python3
-    # scala
-    # sbt
-    # maven
-    # terraform
+    scala
+    sbt
+    maven
+    terraform
+    protobuf
     tmux
     tree
     watch
     wget
     zsh
+    awscli
+    google-cloud-sdk
   ];
 
   environment.extraInit = ''
