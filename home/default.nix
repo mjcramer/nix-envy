@@ -1,4 +1,8 @@
-{ config, pkgs, vars, ... }:
+<<<<<<< Updated upstream
+{ config, pkgs, lib, vars, ... }:
+=======
+{ config, pkgs, ... }:
+>>>>>>> Stashed changes
 
 let 
   username = vars.username;
@@ -30,7 +34,11 @@ let
   # };
 in {
   home = {
+<<<<<<< Updated upstream
     inherit username;
+=======
+    username = username;
+>>>>>>> Stashed changes
     homeDirectory = "/Users/${username}";
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
@@ -81,4 +89,14 @@ in {
     ./programs/htop.nix
     ./programs/vim.nix
   ];
+<<<<<<< Updated upstream
+
+  # home.exitShell = lib.mkIf (config.home.enableUninstall) {
+  #   script = ''
+  #     echo "Cleaning up dotfiles..."
+  #     ${builtins.concatStringsSep "\n" (map (name: "echo Removing $HOME/.${name}") (builtins.attrNames dotfiles))
+  #   '';
+  # };
+=======
+>>>>>>> Stashed changes
 }

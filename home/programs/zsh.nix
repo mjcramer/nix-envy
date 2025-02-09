@@ -10,7 +10,7 @@
     history.append = true;
 
     initExtra = ''
-      if command -v fish >/dev/null 2>%1; then
+      if command -v fish >/dev/null 2>&1; then
         exec fish -l
       fi
     '';

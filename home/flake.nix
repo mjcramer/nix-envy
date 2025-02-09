@@ -22,12 +22,17 @@
         # the path to your home.nix.
         modules = [ ./. ];
 
+<<<<<<< Updated upstream
         # Optionally use extraSpecialArgs to pass through arguments to home.nix
         extraSpecialArgs = {
           vars = {
             inherit username;
           };
         };
+=======
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
+>>>>>>> Stashed changes
       };
     };
 }

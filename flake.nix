@@ -12,22 +12,25 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = inputs@{ self, nixpkgs, nix-darwin, flake-utils, home-manager, ... }: 
     let
       mySystems = {
+        # My personal laptop
         jozibean = {
           system = "x86_64-darwin";
           username = "cramer";
         };
+        # My work laptop
         oxford-corp-cramer = {
           system = "aarch64-darwin";
           username = "mjcramer";
         };
       };
       lib = nixpkgs.lib;
-      mkDarwinSystem = { system, hostname, username }: 
+      mkDarwinSystem = { system, hostname, username }:
         nix-darwin.lib.darwinSystem {
           inherit system;
           specialArgs = {
