@@ -78,15 +78,33 @@
       #     username = vars.username;
       # });
         
-      # // flake-utils.lib.eachDefaultSystem (system:
-      #   let
-      #     pkgs = import nixpkgs { inherit system; };
-      #   in {
-      #     devShells.default = pkgs.mkShell {
-      #       buildInputs = [ pkgs.git pkgs.curl pkgs.neovim ];
-      #       shellHook = ''echo "Welcome to nix develop shell!"'';
-      #     };
-      #   }
-      # );
+#      flake-utils.lib.eachDefaultSystem (system:
+#      let
+#        pkgs = import nixpkgs { inherit system; };
+#        shellHook = ''
+#          # If not already running Fish, replace the shell with Fish
+#          if [ "$SHELL" != "$(which fish)" ]; then
+#            exec fish
+#          fi
+#        '';
+#      in {
+#        devShells = {
+#          default = pkgs.mkShell {
+#            buildInputs = [
+#              pkgs.jdk21       # Java 8
+#              pkgs.scala_3
+#            ];
+#            inherit shellHook;
+#          };
+#          nexus-meta = pkgs.mkShell {
+#            buildInputs = [
+#              pkgs.openjdk8       # Java 8
+#              pkgs.scala_2_12     # Scala 2.12
+#            ];
+#            inherit shellHook;
+#          };
+#        };
+#      }
+#    );
   };
 }

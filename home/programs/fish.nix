@@ -100,6 +100,10 @@
       alias ls='lsd'
       alias now='date +"%T"'
 
+      # Key bindings
+      bind \e\x7f backward-kill-word
+
+      # Make cd into directory read environment vars
       direnv hook fish | source
     '';
 
@@ -126,7 +130,10 @@
     # add_paths_to_fish_user_paths /opt/homebrew/bin ~/envy/bin ~/go/bin /usr/local/bin 
   };
 
-  home.sessionPath = [ "/Applications/IntelliJ IDEA.app/Contents/MacOS" ];
+  home.sessionPath = [ 
+    "/Applications/IntelliJ IDEA.app/Contents/MacOS"
+    "/opt/homebrew/bin" 
+  ];
 
   # We need to run tide configure after activation to set up our prompts
   home.activation.test-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
