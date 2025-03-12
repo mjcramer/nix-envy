@@ -1,10 +1,6 @@
 # ./home/programs/fish.nix
 { config, pkgs, lib, ... }: {
 
-  home.packages = with pkgs; [
-    direnv
-  ];
-
   programs.fish = {
     enable = true;
 
@@ -103,8 +99,10 @@
       # Key bindings
       bind \e\x7f backward-kill-word
 
-      # Make cd into directory read environment vars
+      # Enable fish to read .envrc on changing directory 
       direnv hook fish | source
+      # But not on any arrow key navigation
+      set -g direnv_fish_mode disable_arrow
     '';
 
     shellInitLast = ''

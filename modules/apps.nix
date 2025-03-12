@@ -1,44 +1,46 @@
 { inputs, pkgs, ... }: {
 
-  # install packages from nix's official package repository.
+  # The following are standard tools and commands needed for basic operation. It includes some complex but generic
+  # tooling that may be used for development but generally aren't specific requirements for it. Not that development
+  # tooling and shell integrations are not kept here, this are managed by nix home-manager
   environment.systemPackages = with pkgs; [
     bash
     curl
-    nmap
-    fd
+    nmap # networking tool
+    fd # simpler intuitive alternative to find
     fish
-    fzf
-    git
+    fzf # fuzzy finder
+    git 
     gnugrep
-    grc
+    grc # generic text colorize
     htop
     iftop
-    # jetbrains.idea-ultimate
     jq # json query
     lsd # much better ls
     neovim # modern vim 
     nil # nix language server
     openssh
     python3
-    scala
-    sbt
-    maven
-    terraform
-    protobuf
-    tmux
-    tree
     watch
     wget
     zsh
-    awscli2
-    google-cloud-sdk
-    coursier
+    # scala
+    # sbt
+    # maven
+    # terraform
+    # protobuf
+    # tmux
+    # tree
+    # awscli2
+    # google-cloud-sdk
+    # coursier
+    # jetbrains.idea-ultimate
 #    corretto11
 #    corretto17
 #    corretto21
 #    jdk11
 #    jdk17
-    jdk21
+    # jdk21
 #    vscode
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions; [
