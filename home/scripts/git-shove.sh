@@ -16,10 +16,10 @@ fi
 # Add all updates to git versioned files
 echo "Adding and committing all changed files..."
 git add -u
+
 # Commit the files with the supplied message
 git commit -m "$message" || exit 1
 
 echo "Pushing files to repo $3 $4"
 # Push to repo and branch
 git push $3 $4
-

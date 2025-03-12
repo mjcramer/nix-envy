@@ -12,22 +12,13 @@ let
       recursive = true; # This has no effect if its a file
     };
   }) dotfileNames);
-  
+  # Directory containing `copier` templates
   templates = {
     "templates" = {
       source = ./templates;
       recursive = true;
     };
   };
-
-  # Read all script files and create Nix scripts
-  scriptsDir = ./scripts;
-  # scripts = pkgs.buildEnv {
-  #   name = "scripts";
-  #   paths = lib.concatMap (scriptFile: [
-  #     (pkgs.writeShellScriptBin (lib.strings.removeSuffix ".sh" (lib.strings.baseName scriptFile)) (builtins.readFile "${scriptsDir}/${scriptFile}"))
-  #   ]) (builtins.attrValues (builtins.readDir scriptsDir));
-  # };
 in {
   home = {
     inherit username;
@@ -48,24 +39,41 @@ in {
     packages = [
       # This is what we are going to use for templating
       pkgs.copier
+
+    # scala
+    # sbt
+    # maven
+    # terraform
+    # protobuf
+    # tmux
+    # tree
+    # awscli2
+    # google-cloud-sdk
+    # coursier
+    # jetbrains.idea-ultimate
+#    corretto11
+#    corretto17
+#    corretto21
+#    jdk11
+#    jdk17
+    # jdk21
+#    vscode
+
+
       # It is sometimes useful to fine-tune packages, for example, by applying
       # overrides. You can do that directly here, just don't forget the
       # parentheses. Maybe you want to install Nerd Fonts with a limited number of
       # fonts?
       #(pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-      # You can also create simple shell scripts directly inside your
-      # configuration. For example, this adds a command 'my-hello' to your
-      # environment:
-      (pkgs.writeShellScriptBin "my-hello" ''
-        echo "Hello, ${config.home.username}!"
-      '')
     ];
 
+    #pkgs._1password
+    #pkgs._1password-gui
+
     # Set environment/session variables
-    # home.sessionVariables.PATH = "${scripts}/bin:${config.home.sessionVariables.PATH}";
     sessionVariables = {
-      EDITOR = "nvim";
+      EDITOR = "vim";
     };
   };
 
@@ -79,6 +87,7 @@ in {
     ./programs/git.nix
     ./programs/htop.nix
     ./programs/vim.nix
+    ./scripts.nix
   ];
 
   # home.exitShell = lib.mkIf (config.home.enableUninstall) {

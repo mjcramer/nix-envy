@@ -42,7 +42,8 @@
           modules = [
             ./modules/core.nix
             ./modules/system.nix
-            ./modules/apps.nix
+            ./modules/packages.nix
+            ./modules/host.nix
             ./modules/users.nix
             home-manager.darwinModules.home-manager {
               home-manager.verbose = true;
@@ -72,11 +73,6 @@
           username = "mjcramer";
         };
       };
-      # darwinConfigurations = lib.mapAttrs (name: vars: mkDarwinSystem {
-      #     hostname = name;
-      #     system = vars.system;
-      #     username = vars.username;
-      # });
         
 #      flake-utils.lib.eachDefaultSystem (system:
 #      let
