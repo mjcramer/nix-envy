@@ -111,21 +111,6 @@
         jenv init - | source
       end
     '';
-
-    # # Adds path element to path if not already contained
-    # function add_paths_to_fish_user_paths
-    #     # Loop through each path in the list
-    #     for path in $argv
-    #         # Check if the path is already in user paths 
-    #         if not contains $path $fish_user_paths
-    #           set -Ua fish_user_paths $path 
-    #           echo "Added $path to fish_user_paths..."
-    #         end
-    #     end
-    # end
-
-    # # Set up path
-    # add_paths_to_fish_user_paths /opt/homebrew/bin ~/envy/bin ~/go/bin /usr/local/bin 
   };
 
   home.sessionPath = [ 
