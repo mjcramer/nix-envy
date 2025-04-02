@@ -33,6 +33,7 @@
       mkDarwinSystem = { system, hostname, username }:
         nix-darwin.lib.darwinSystem {
           inherit system;
+          # config.allowUnfree = true;
           specialArgs = {
             vars = {
               inherit username;

@@ -39,6 +39,8 @@
         }
       ];
     })
+  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+    iterm2
   ];
 
   #   # mac app store
