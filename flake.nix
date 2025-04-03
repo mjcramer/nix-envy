@@ -21,7 +21,7 @@
         # My personal laptop
         jozibean = {
           system = "x86_64-darwin";
-          username = "cramer";
+          username = "mjcramer";
         };
         # My work laptop
         oxford-corp-cramer = {
