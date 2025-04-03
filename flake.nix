@@ -66,7 +66,7 @@
         "jozibean" = mkDarwinSystem { 
           system = "x86_64-darwin";
           hostname = "jozibean";
-          username = "cramer";
+          username = "mjcramer";
         };
         "oxford-corp-cramer" = mkDarwinSystem { 
           system = "aarch64-darwin";
