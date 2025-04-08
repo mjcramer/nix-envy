@@ -4,6 +4,8 @@
   # tooling that may be used for development but generally aren't specific requirements for it. Not that development
   # tooling and shell integrations are not kept here, this are managed by nix home-manager
   environment.systemPackages = with pkgs; [
+    # _1password-cli
+    # _1password-gui
     bash
     curl
     fd # simpler intuitive alternative to find
@@ -63,4 +65,3 @@
 # "Spotify" "https://download.scdn.co/SpotifyInstaller.zip"
 # # "Intellij Idea" "https://www.jetbrains.com/idea/download/download-thanks.html?platform=mac"
 # # "Firefox" "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"
-# "SizeUp" "https://www.irradiatedsoftware.com/downloads/?file=SizeUp.zip"

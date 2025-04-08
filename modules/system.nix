@@ -39,6 +39,9 @@
         # disable press-and-hold for keys in favor of key repeat
         ApplePressAndHoldEnabled = false;
 
+        # Change mouse scroll direction to be more linuxy
+        "com.apple.swipescrolldirection" = false;
+
         # fast key repeat rate when hold
         KeyRepeat = 2;
         InitialKeyRepeat = 15;
@@ -73,6 +76,11 @@
         _FXShowPosixPathInTitle = true;
       };
     };
+
+    # keyboard = {
+      # enableKeyMapping = true;
+      # swapLeftCommandAndLeftAlt = true;
+    # };
 
     # WindowManager = {
     #   AutoHide = true;

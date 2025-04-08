@@ -2,6 +2,7 @@
 
 let 
   username = vars.username;
+  hostname = vars.hostname;
   # Directory containing dotfiles that aren't managed by nix
   dotfilesDir = ./dotfiles;
   dotfileNames = builtins.attrNames (builtins.readDir dotfilesDir);
@@ -36,10 +37,12 @@ in {
     file = dotfiles // templates; 
 
     # The home.packages option allows you to install Nix packages into your environment.
-    packages = [
+    packages = with pkgs; [
       # This is what we are going to use for templating
-      pkgs.copier
-
+      copier
+      openssh 
+    #  nerd-fonts.meslo-lg
+    #  karabiner-elements # device (keyboard, mouse, etc.) mapping
     # scala
     # sbt
     # maven
@@ -60,33 +63,37 @@ in {
 #    vscode
 
 
-      # It is sometimes useful to fine-tune packages, for example, by applying
-      # overrides. You can do that directly here, just don't forget the
-      # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-      # fonts?
-      #(pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
     ];
-
-    #pkgs._1password
-    #pkgs._1password-gui
 
     # Set environment/session variables
     sessionVariables = {
       EDITOR = "vim";
     };
+
+    activation.generateSSHKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      if [ ! -f ~/.ssh/id_ed25519 ]; then
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N "" -C "${username}@${hostname}"
+      fi
+    '';
   };
 
+  # fonts.fontconfig.enable = true;
+  
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   imports = [
+    # ./programs/1password.nix
     ./programs/fish.nix
     ./programs/zsh.nix
     ./programs/direnv.nix
     ./programs/git.nix
     ./programs/htop.nix
     ./programs/vim.nix
+    ./programs/bcomp.nix
+    ./programs/sizeup.nix
     ./scripts.nix
   ];
 
