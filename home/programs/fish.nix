@@ -1,5 +1,12 @@
 # ./home/programs/fish.nix
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ... }: 
+let 
+  tideConfigure = builtins.concatStringsSep " " [
+    "tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Round"
+    "--powerline_prompt_heads=Round --powerline_prompt_tails=Sharp --powerline_prompt_style='Two lines, frame' --prompt_connection=Disconnected"
+    "--powerline_right_prompt_frame=Yes --prompt_connection_andor_frame_color=Darkest --prompt_spacing=Compact --icons='Many icons' --transient=Yes"
+  ];
+in {
 
   programs.fish = {
     enable = true;
@@ -118,11 +125,14 @@
     "/opt/homebrew/bin" 
   ];
 
+  # home.activation.installFonts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   mkdir -p "$HOME/Library/Fonts"
+  #   ${toString (builtins.concatStringsSep "\n" mesloFontCopyCommands)}
+  # '';
+
   # We need to run tide configure after activation to set up our prompts
-  home.activation.test-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${pkgs.fish}/bin/fish -c "ls -al ~/.config/fish/functions"
-  '';
-  home.activation.configure-tide = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    ${pkgs.fish}/bin/fish -c "echo ${pkgs.fish}; echo ${pkgs.fishPlugins.tide}/bin/tide configure --auto --style=Rainbow --prompt_colors='True color' --show_time='24-hour format' --rainbow_prompt_separators=Round --powerline_prompt_heads=Round --powerline_prompt_tails=Slanted --powerline_prompt_style='Two lines, frame' --prompt_connection=Dotted --powerline_right_prompt_frame=Yes --prompt_connection_andor_frame_color=Darkest --prompt_spacing=Sparse --icons='Many icons' --transient=Yes"
+  home.activation.configureTide = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    echo "Running tide configure..."
+    ${pkgs.fish}/bin/fish --login -c "if set -q tide_configured; ${tideConfigure}; set -Ux tide_configured true; else; echo Tide already configured; end"
   '';
 }

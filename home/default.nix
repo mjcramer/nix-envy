@@ -41,7 +41,7 @@ in {
       # This is what we are going to use for templating
       copier
       openssh 
-    #  nerd-fonts.meslo-lg
+      nerd-fonts.meslo-lg
     #  karabiner-elements # device (keyboard, mouse, etc.) mapping
     # scala
     # sbt
@@ -79,7 +79,7 @@ in {
     '';
   };
 
-  # fonts.fontconfig.enable = true;
+  fonts.fontconfig.enable = true;
   
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
