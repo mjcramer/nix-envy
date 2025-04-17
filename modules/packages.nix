@@ -1,11 +1,17 @@
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, ... }: 
+let
+  applications = with pkgs; [
+    firefox
+    zoom-us
+  ]++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
+    iterm2
+  ];
+in {
 
   # The following are standard tools and commands needed for basic operation. It includes some complex but generic
   # tooling that may be used for development but generally aren't specific requirements for it. Not that development
   # tooling and shell integrations are not kept here, this are managed by nix home-manager
   environment.systemPackages = with pkgs; [
-    # _1password-cli
-    # _1password-gui
     bash
     curl
     fd # simpler intuitive alternative to find
@@ -26,42 +32,28 @@
     watch
     wget
     zsh
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        bbenoist.nix
-        ms-python.python
-        ms-azuretools.vscode-docker
-        ms-vscode-remote.remote-ssh
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "remote-ssh-edit";
-          publisher = "ms-vscode-remote";
-          version = "0.47.2";
-          sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-        }
-      ];
-    })
-  ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [
-    iterm2
-  ];
+  ] ++ applications;
 
-  #   # mac app store
-  #   # click
-  #   masApps = {
-  #     amphetamine = 937984704;
-  #     kindle = 302584613;
-  #     tailscale = 1475387142;
-
-  #     # useful for debugging macos key codes
-  #     #key-codes = 414568915;
-  #   };
-  # };
+  system.activationScripts.postActivation.text = '' 
+    echo "Copying nix applications:"
+    applications=$(${pkgs.fd}/bin/fd --extension app --type directory --maxdepth 2 --follow . "$(realpath "/Applications/Nix Apps/")")
+    for application in $applications; do
+      app=$(basename "$application")
+      if [ ! -d "/Applications/$app" ]; then
+        echo "  Copying $app to /Applications..."
+        cp -R "$application" /Applications
+      else 
+        echo "  Application $app is already present."
+      fi
+    done
+  '';
 }
 
-# "iTerm" "https://iterm2.com/downloads/stable/iTerm2-3_4_23.zip"
+    # echo "Copying Nix-installed .app bundles to /Applications/NixApps"
+    # fd "/Applications/Nix Apps/*.app"
+    #   pkgs.lib.concatStringsSep " " (map (pkg: "${pkg}/Applications") guiApps)
+    # } -name '*.app' -exec cp -R {} /Applications/NixApps/ \;
+
 # "Slack" "https://downloads.slack-edge.com/releases/macos/4.36.140/prod/universal/Slack-4.36.140-macOS.dmg"
-# "1Password" "https://downloads.1password.com/mac/1Password.zip"
 # "Zoom" "https://zoom.us/client/5.17.11.31580/zoomusInstallerFull.pkg"
 # "Spotify" "https://download.scdn.co/SpotifyInstaller.zip"
-# # "Intellij Idea" "https://www.jetbrains.com/idea/download/download-thanks.html?platform=mac"
-# # "Firefox" "https://download.mozilla.org/?product=firefox-latest-ssl&os=osx&lang=en-US"

@@ -17,18 +17,6 @@
 
   outputs = inputs@{ self, nixpkgs, nix-darwin, flake-utils, home-manager, ... }: 
     let
-      mySystems = {
-        # My personal laptop
-        jozibean = {
-          system = "x86_64-darwin";
-          username = "mjcramer";
-        };
-        # My work laptop
-        oxford-corp-cramer = {
-          system = "aarch64-darwin";
-          username = "mjcramer";
-        };
-      };
       lib = nixpkgs.lib;
       mkDarwinSystem = { system, hostname, username }:
         nix-darwin.lib.darwinSystem {
@@ -68,23 +56,18 @@
           hostname = "jozibean";
           username = "mjcramer";
         };
-        "oxford-corp-cramer" = mkDarwinSystem { 
-          system = "aarch64-darwin";
-          hostname = "oxford-corp-cramer";
-          username = "mjcramer";
-        };
       };
         
-#      flake-utils.lib.eachDefaultSystem (system:
-#      let
-#        pkgs = import nixpkgs { inherit system; };
+      # flake-utils.lib.eachDefaultSystem (system:
+      # let
+        # pkgs = import nixpkgs { inherit system; };
 #        shellHook = ''
 #          # If not already running Fish, replace the shell with Fish
 #          if [ "$SHELL" != "$(which fish)" ]; then
 #            exec fish
 #          fi
 #        '';
-#      in {
+      # in {
 #        devShells = {
 #          default = pkgs.mkShell {
 #            buildInputs = [
@@ -101,7 +84,7 @@
 #            inherit shellHook;
 #          };
 #        };
-#      }
-#    );
+      # }
+    # );
   };
 }

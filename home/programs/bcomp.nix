@@ -5,6 +5,7 @@ let
 in {
   home.packages = with pkgs; [
     unzip
+    tree
   ];
 
   # TODO: Need to check for darwin here
@@ -14,8 +15,8 @@ in {
   };
 
   home.activation.installBeyondCompare = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    if [ ! -d "/Applications/Beyond Compare.app" ]; then
-      ${pkgs.unzip}/bin/unzip .local/downloads/BeyondCompare.zip -d /Applications
+    if [ ! -d "$HOME/Applications/Beyond Compare.app" ]; then
+      ${pkgs.unzip}/bin/unzip .local/downloads/BeyondCompare.zip -d $HOME/Applications
     else
       echo "Beyond Compare already installed!"
     fi

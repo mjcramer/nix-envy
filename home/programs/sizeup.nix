@@ -10,8 +10,8 @@
   };
 
   home.activation.installSizeUp = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    if [ ! -d "/Applications/SizeUp.app" ]; then
-      ${pkgs.unzip}/bin/unzip .local/downloads/SizeUp.zip -d /Applications
+    if [ ! -d "$HOME/Applications/SizeUp.app" ]; then
+      ${pkgs.unzip}/bin/unzip .local/downloads/SizeUp.zip -d $HOME/Applications
     else
       echo "SizeUp already installed!"
     fi
