@@ -49,6 +49,14 @@
             }
           ];
         };
+
+        shellHook = ''
+          # If not already running Fish, replace the shell with Fish
+          if [ "$SHELL" != "$(which fish)" ]; then
+            exec fish
+          fi
+        '';
+
     in {
       darwinConfigurations = {
         "jozibean" = mkDarwinSystem { 
@@ -56,18 +64,14 @@
           hostname = "jozibean";
           username = "mjcramer";
         };
+        "cramer-adobe-macbook" = mkDarwinSystem { 
+          system = "aarch64-darwin";
+          hostname = "cramer-adobe-macbook";
+          username = "micramer";
+        };
       };
         
-      # flake-utils.lib.eachDefaultSystem (system:
-      # let
-        # pkgs = import nixpkgs { inherit system; };
-#        shellHook = ''
-#          # If not already running Fish, replace the shell with Fish
-#          if [ "$SHELL" != "$(which fish)" ]; then
-#            exec fish
-#          fi
-#        '';
-      # in {
+# flake-utils.lib.eachDefaultSystem (system:
 #        devShells = {
 #          default = pkgs.mkShell {
 #            buildInputs = [
