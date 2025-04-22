@@ -6,7 +6,7 @@
 
   home.file.".local/downloads/1Password.zip".source = builtins.fetchurl {
     url = "https://downloads.1password.com/mac/1Password.zip";
-    sha256 = "03ismzz4i9drxdj0kvk4y2pm8d5k94301wx0i6a4q71bgfmj26xr";
+    sha256 = "1rzblb6ii49xpgp5hgafbqk1fjaly167lh2mbf0nrmdq9wa2w4pp";
   };
 
   home.activation.install1Password = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
