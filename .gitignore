@@ -1,11 +1,10 @@
 
 # Nix artifacts
-test.nix
 result
 
 # Intellij Idea
 .idea
 
 # Miscellaneous
-/.DS_Store
+.DS_Store
 

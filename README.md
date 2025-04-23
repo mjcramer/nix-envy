@@ -16,7 +16,7 @@ This project subsumes the [envy](https://github.com/mjcramer/envy) respository, 
 
 - Build the [nix-darwin](https://github.com/LnL7/nix-darwin) flake in this repository, using one of the following commands.
   ```shell
-  nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --flake github:mjcramer/nix-envy
+  nix --extra-experimental-features 'nix-command flakes' run nix-darwin -- switch --refresh --flake github:mjcramer/nix-envy
   ```
   Or, if you have the git repository checked out locally,
   ```shell
