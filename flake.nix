@@ -31,9 +31,10 @@
           modules = [
             ./modules/core.nix
             ./modules/system.nix
-            ./modules/packages.nix
             ./modules/host.nix
             ./modules/users.nix
+            ./modules/packages.nix
+            ./modules/homebrew.nix
             home-manager.darwinModules.home-manager {
               home-manager.verbose = true;
               home-manager.useGlobalPkgs = true;
