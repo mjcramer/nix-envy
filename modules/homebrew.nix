@@ -31,6 +31,10 @@
       "zoom"
       "iterm2"
       "spotify"
+      "sizeup"
+      "beyond-compare"
+      "intellij-idea"
+      "visual-studio-code"
     ];
 
     brews = [ 

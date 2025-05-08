@@ -4,21 +4,7 @@
 
   time.timeZone = "America/Los_Angeles";
 
-  # networking.hostName = hostname;
-  # networking.computerName = hostname;
-  # system.defaults.smb.NetBIOSName = hostname;
-
-
   system = {
-
-    # activationScripts are executed every time you boot the system
-    # or run `nixos-rebuild` / `darwin-rebuild`.
-    # activationScripts.postUserActivation.text = ''
-    #   # activateSettings -u will reload the settings from the database and apply
-    #   # them to the current session, so we do not need to logout and login again
-    #   # to make the changes take effect.
-    #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-    # '';
 
     defaults = {
       # clock
@@ -78,6 +64,12 @@
       enableKeyMapping = true;
     };
 
+    activationScripts.postUserActivation.text = ''
+      # activateSettings -u will reload the settings from the database and apply them to the current session, so we do not need to logout and login again
+      # to make the changes take effect.
+      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    '';
+
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog
     stateVersion = 5;
@@ -91,7 +83,6 @@
   # Enable alternative shell support in nix-darwin.
   programs.fish.enable = true;
 
-
   # load env vars set via home manager
   # environment.extraInit = let
   #   homeManagerSessionVars =
@@ -101,13 +92,6 @@
   # '';
 }
 
-    # echo "Setting Finder to show full path in title."
-    # defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-    # killall Finder
-
-    # echo "Setting Finder to show all files."
-    # defaults write com.apple.Finder AppleShowAllFiles YES
-    # killall Finder
 
 # setup_fonts() {
 #   pushd /Library/Fonts

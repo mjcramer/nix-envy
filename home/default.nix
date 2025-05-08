@@ -55,23 +55,22 @@ in {
     # awscli2
     # google-cloud-sdk
     # coursier
-    spotify
-    jetbrains.idea-ultimate
-    (vscode-with-extensions.override {
-      vscodeExtensions = with vscode-extensions; [
-        bbenoist.nix
-        ms-python.python
-        ms-azuretools.vscode-docker
-        ms-vscode-remote.remote-ssh
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "remote-ssh-edit";
-          publisher = "ms-vscode-remote";
-          version = "0.47.2";
-          sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-        }
-      ];
-    })
+    # jetbrains.idea-ultimate
+    # (vscode-with-extensions.override {
+    #   vscodeExtensions = with vscode-extensions; [
+    #     bbenoist.nix
+    #     ms-python.python
+    #     ms-azuretools.vscode-docker
+    #     ms-vscode-remote.remote-ssh
+    #   ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    #     {
+    #       name = "remote-ssh-edit";
+    #       publisher = "ms-vscode-remote";
+    #       version = "0.47.2";
+    #       sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
+    #     }
+    #   ];
+    # })
 #    corretto11
 #    corretto17
 #    corretto21
@@ -87,19 +86,6 @@ in {
     };
 
     activation.setWallpaper = lib.hm.dag.entryAfter ["linkGeneration"] (builtins.readFile ./helpers/set-wallpapers.sh);
-
-    activation.copyHomeManagerApplications = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      applications=$(${pkgs.fd}/bin/fd --extension app --type directory --maxdepth 2 --follow . "$(realpath "$HOME/Applications/Home Manager Apps/")")
-      while IFS= read -r application; do
-        app=$(basename "$application")
-        if [ ! -d "$HOME/Applications/$app" ]; then
-          echo "Copying $app to $HOME/Applications..."
-          cp -R "$application" $HOME/Applications
-        else 
-          echo "Application $app is already present."
-        fi
-      done <<< "$applications"
-    '';
 
     activation.generateSSHKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -f ~/.ssh/id_ed25519 ]; then
@@ -122,16 +108,6 @@ in {
     ./programs/git.nix
     ./programs/htop.nix
     ./programs/vim.nix
-    ./programs/1password.nix
-    ./programs/bcomp.nix
-    ./programs/sizeup.nix
     ./scripts.nix
   ];
-
-  # home.exitShell = lib.mkIf (config.home.enableUninstall) {
-  #   script = ''
-  #     echo "Cleaning up dotfiles..."
-  #     ${builtins.concatStringsSep "\n" (map (name: "echo Removing $HOME/.${name}") (builtins.attrNames dotfiles))
-  #   '';
-  # };
 }
