@@ -110,6 +110,11 @@ in {
       direnv hook fish | source
       # But not on any arrow key navigation
       set -g direnv_fish_mode disable_arrow
+
+      # Set up docker completion
+      if command -q docker 
+	docker completion fish 
+      end
     '';
 
     shellInitLast = ''
