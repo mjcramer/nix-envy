@@ -20,9 +20,6 @@
     #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     # '';
 
-    # keyboard.enableKeyMapping = true;
-    # keyboard.remapCapsLockToControl = true;
-
     defaults = {
       # clock
       menuExtraClock.Show24Hour = true;
@@ -77,15 +74,9 @@
       };
     };
 
-    # keyboard = {
-      # enableKeyMapping = true;
-      # swapLeftCommandAndLeftAlt = true;
-    # };
-
-    # WindowManager = {
-    #   AutoHide = true;
-    #   AppWindowGroupingBehavior = false;
-    # };
+    keyboard = {
+      enableKeyMapping = true;
+    };
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog

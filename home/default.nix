@@ -86,6 +86,8 @@ in {
       EDITOR = "vim";
     };
 
+    activation.setWallpaper = lib.hm.dag.entryAfter ["linkGeneration"] (builtins.readFile ./helpers/set-wallpapers.sh);
+
     activation.copyHomeManagerApplications = lib.hm.dag.entryAfter ["writeBoundary"] ''
       applications=$(${pkgs.fd}/bin/fd --extension app --type directory --maxdepth 2 --follow . "$(realpath "$HOME/Applications/Home Manager Apps/")")
       while IFS= read -r application; do

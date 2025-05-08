@@ -26,6 +26,11 @@
     };
 
     casks = [
+      "1password"
+      "firefox"
+      "zoom"
+      "iterm2"
+      "spotify"
     ];
 
     brews = [ 
