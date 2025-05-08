@@ -30,6 +30,7 @@
       "firefox"
       "zoom"
       "iterm2"
+      "docker"
       "spotify"
       "sizeup"
       "beyond-compare"
