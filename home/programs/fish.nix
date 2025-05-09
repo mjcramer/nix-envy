@@ -113,7 +113,9 @@ in {
 
       # Set up docker completion
       if command -q docker 
-	docker completion fish 
+        if [ ! -f ~/.config/fish/completions/docker.fish ]
+	        docker completion fish > ~/.config/fish/completions/docker.fish
+        end  
       end
     '';
 

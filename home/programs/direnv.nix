@@ -4,6 +4,11 @@
     direnv
   ];
 
+  home.file.".config/direnv/direnv.toml".text = ''
+    [global]
+      warn_timeout = "30s"
+      DIRENV_LOG_FORMAT = "direnv: %s"
+  '';
   programs.direnv = {
     enable = true;
     enableBashIntegration = true; 
