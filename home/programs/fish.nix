@@ -102,6 +102,8 @@ in {
       alias pingfast='ping -c 100 -s.2'
       alias ls='lsd'
       alias now='date +"%T"'
+      alias vi=nvim
+      alias vim=nvim
 
       # Key bindings
       bind \e\x7f backward-kill-word
