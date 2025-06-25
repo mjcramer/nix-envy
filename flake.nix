@@ -67,7 +67,7 @@
 
           modules = [
             nixos-wsl.nixosModules.wsl
-            ./modules/nixos/programes.nix
+            ./modules/nixos/programs.nix
             home-manager.nixosModules.home-manager {
               home-manager.verbose = true;
               home-manager.useGlobalPkgs = true;
