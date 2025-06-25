@@ -44,6 +44,7 @@ in {
       openssh 
       nerd-fonts.meslo-lg
       fd # more better find for activation scripts
+      kubectl
     #  karabiner-elements # device (keyboard, mouse, etc.) mapping
     # scala
     # sbt

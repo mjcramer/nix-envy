@@ -28,9 +28,9 @@
     casks = [
       "1password"
       "firefox"
+      "libreoffice"
       "zoom"
       "iterm2"
-      "docker"
       "spotify"
       "sizeup"
       "beyond-compare"

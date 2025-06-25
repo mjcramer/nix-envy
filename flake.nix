@@ -2,20 +2,25 @@
   description = "Cramer's Workstation Environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, flake-utils, home-manager, ... }: 
+
+  outputs = inputs@{ self, nixpkgs, nix-darwin, nixos-wsl, home-manager, flake-utils, ... }: 
     let
       lib = nixpkgs.lib;
       mkDarwinSystem = { system, hostname, username }:
@@ -50,12 +55,41 @@
           ];
         };
 
-        shellHook = ''
-          # If not already running Fish, replace the shell with Fish
-          if [ "$SHELL" != "$(which fish)" ]; then
-            exec fish
-          fi
-        '';
+      mkNixosSystem = { system, hostname, username }:
+        lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            vars = {
+              inherit username;
+              inherit hostname;
+            };
+          };
+
+          modules = [
+            nixos-wsl.nixosModules.wsl
+            # ./configuration.nix
+            home-manager.nixosModules.home-manager {
+              home-manager.verbose = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "nix-backup";
+              home-manager.users.${username} = import ./home;
+              home-manager.extraSpecialArgs = {
+                vars = {
+                  inherit username;
+                  inherit hostname;
+                };
+              };
+            }
+          ];
+        };
+
+      shellHook = ''
+        # If not already running Fish, replace the shell with Fish
+        if [ "$SHELL" != "$(which fish)" ]; then
+          exec fish
+        fi
+      '';
 
     in {
       darwinConfigurations = {
@@ -71,6 +105,13 @@
         };
       };
         
+      nixosConfigurations = {
+        nixos = mkNixosSystem { 
+          system = "x86_64-linux";
+          hostname = "nixos";
+        };
+      };
+
 # flake-utils.lib.eachDefaultSystem (system:
 #        devShells = {
 #          default = pkgs.mkShell {
@@ -92,3 +133,8 @@
     # );
   };
 }
+
+
+
+
+
