@@ -1,11 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, vars, ... }: {
 
   # https://daiderd.com/nix-darwin/manual/index.html#sec-options
 
   time.timeZone = "America/Los_Angeles";
 
   system = {
-
+    primaryUser = vars.username;
     defaults = {
       # clock
       menuExtraClock.Show24Hour = true;
@@ -63,12 +63,6 @@
     keyboard = {
       enableKeyMapping = true;
     };
-
-    activationScripts.postUserActivation.text = ''
-      # activateSettings -u will reload the settings from the database and apply them to the current session, so we do not need to logout and login again
-      # to make the changes take effect.
-      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-    '';
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog

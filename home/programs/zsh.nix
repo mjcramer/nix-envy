@@ -9,7 +9,7 @@
     syntaxHighlighting.enable = true;
     history.append = true;
 
-    initExtra = ''
+    initContent = ''
       if [ -z "$INTELLIJ_ENVIRONMENT_READER" ]; then
         if command -v fish >/dev/null 2>&1; then
           exec fish -l
