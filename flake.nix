@@ -109,7 +109,7 @@
         nixos = mkNixosSystem { 
           system = "x86_64-linux";
           hostname = "nixos";
-          username = "mcramer"
+          username = "mcramer";
         };
       };
 
