@@ -76,14 +76,6 @@
   programs.zsh.enable = true;
   # Enable alternative shell support in nix-darwin.
   programs.fish.enable = true;
-
-  # load env vars set via home manager
-  # environment.extraInit = let
-  #   homeManagerSessionVars =
-  #     "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh";
-  # in ''
-  #   [[ -f ${homeManagerSessionVars} ]] && source ${homeManagerSessionVars}
-  # '';
 }
 
 

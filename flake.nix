@@ -34,9 +34,9 @@
           };
           modules = [
             ./modules/core.nix
-            ./modules/system.nix
+            ./modules/darwin/system.nix
             ./modules/host.nix
-            ./modules/users.nix
+            ./modules/darwin/users.nix
             ./modules/packages.nix
             ./modules/homebrew.nix
             home-manager.darwinModules.home-manager {
