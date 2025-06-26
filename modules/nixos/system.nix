@@ -1,4 +1,4 @@
-{ pkgs, vars, ... }: {
+{ pkgs, lib, vars, ... }: {
 
   fileSystems."/" = {
     device = "none";
