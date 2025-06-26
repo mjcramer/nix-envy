@@ -77,6 +77,16 @@
     stateVersion = "25.05";
   };
 
+  # Disable firewall by default, as it is not needed in WSL
+  networking.firewall.enable = false;
+
+  services = {
+    dbus.enable = false;
+    timeSyncd.enable = false;
+    avahi.enable = false;
+    logrotate.enable = false;
+  }
+
   # # touchid for sudo authentication
   # security.pam.services.sudo_local.touchIdAuth = true;
   # # create /etc/zshrc that loads the nix-darwin environment,
