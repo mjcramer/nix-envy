@@ -81,10 +81,10 @@
   networking.firewall.enable = false;
 
   services = {
-    dbus.enable = false;
-    timesyncd.enable = false;
-    avahi.enable = false;
-    logrotate.enable = false;
+    dbus.enable = lib.mkForce false;
+    timesyncd.enable = lib.mkForce false;
+    avahi.enable = lib.mkForce false;
+    logrotate.enable = lib.mkForce false;
   };
 
   # # touchid for sudo authentication
