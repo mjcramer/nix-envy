@@ -2,13 +2,16 @@
 let 
   username = vars.username;
 in {
-   users.users."${username}" = {
-    isNornalUser = true;
-    isSystemUser = false;
-    home = "/Users/${username}";
-    description = username;
-    shell = pkgs.fish;
+   users = {
+    users."${username}" = {
+      isNornalUser = true;
+      isSystemUser = false;
+      home = "/Users/${username}";
+      description = "User account for ${username}";
+      group = username;
+      shell = pkgs.fish;
+    };
+    groups."${username}" = {};
   };
-
-   nix.settings.trusted-users = [ username ];
+  nix.settings.trusted-users = [ username ];
 }
