@@ -85,7 +85,7 @@
     timeSyncd.enable = false;
     avahi.enable = false;
     logrotate.enable = false;
-  }
+  };
 
   # # touchid for sudo authentication
   # security.pam.services.sudo_local.touchIdAuth = true;
