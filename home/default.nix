@@ -86,7 +86,7 @@ in {
       EDITOR = "vim";
     };
 
-    activation.setWallpaper = lib.hm.dag.entryAfter ["linkGeneration"] (builtins.readFile ./helpers/set-wallpapers.sh);
+    # activation.setWallpaper = lib.hm.dag.entryAfter ["linkGeneration"] (builtins.readFile ./helpers/set-wallpapers.sh);
 
     activation.generateSSHKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -f ~/.ssh/id_ed25519 ]; then

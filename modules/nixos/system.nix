@@ -12,7 +12,7 @@
 
   # time.timeZone = "America/Los_Angeles";
 
-  # system = {
+  system = {
   #   primaryUser = vars.username;
   #   defaults = {
   #     # clock
@@ -72,10 +72,10 @@
   #     enableKeyMapping = true;
   #   };
 
-  #   # Used for backwards compatibility, please read the changelog before changing.
-  #   # $ darwin-rebuild changelog
-  #   stateVersion = 5;
-  # };
+    # Used for backwards compatibility, please read the changelog before changing.
+    # $ darwin-rebuild changelog
+    stateVersion = "25.05";
+  };
 
   # # touchid for sudo authentication
   # security.pam.services.sudo_local.touchIdAuth = true;

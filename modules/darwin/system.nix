@@ -66,7 +66,7 @@
 
     # Used for backwards compatibility, please read the changelog before changing.
     # $ darwin-rebuild changelog
-    stateVersion = 5;
+    stateVersion = "25.05"
   };
 
   # touchid for sudo authentication
