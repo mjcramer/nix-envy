@@ -82,7 +82,7 @@
 
   services = {
     dbus.enable = false;
-    timeSyncd.enable = false;
+    timesyncd.enable = false;
     avahi.enable = false;
     logrotate.enable = false;
   };
