@@ -4,7 +4,7 @@ let
 in {
    users = {
     users."${username}" = {
-      isNornalUser = true;
+      isNormalUser = true;
       isSystemUser = false;
       home = "/Users/${username}";
       description = "User account for ${username}";
