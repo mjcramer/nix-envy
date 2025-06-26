@@ -3,12 +3,12 @@
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
-  }
+  };
 
   boot.loader = {
     grub.enable = false; 
     generic-extlinux-compatible.enable = false;
-  }
+  };
 
   # time.timeZone = "America/Los_Angeles";
 
