@@ -67,6 +67,8 @@
 
           modules = [
             nixos-wsl.nixosModules.wsl
+            ./modules/nixos/system.nix
+            ./modules/nixos/users.nix
             ./modules/nixos/programs.nix
             home-manager.nixosModules.home-manager {
               home-manager.verbose = true;
