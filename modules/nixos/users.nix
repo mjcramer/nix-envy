@@ -1,13 +1,14 @@
 { pkgs, home-manager, vars, ... }: 
 let 
   username = vars.username;
+  homeDirectory = vars.homeDirectory;
 in {
   users = {
     users."${username}" = {
       isNormalUser = true;
       isSystemUser = false;
-      home = "/Users/${username}";
-      description = "User account for ${username}";
+      home = homeDirectory;
+      description = "User account for ${username} in ${homeDirectory}";
       group = username;
       extraGroups = [ 
         "wheel" 

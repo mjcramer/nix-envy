@@ -23,68 +23,66 @@
   outputs = inputs@{ self, nixpkgs, nix-darwin, nixos-wsl, home-manager, flake-utils, ... }: 
     let
       lib = nixpkgs.lib;
+
       mkDarwinSystem = { system, hostname, username }:
-        nix-darwin.lib.darwinSystem {
-          inherit system;
+        let
           specialArgs = {
             vars = {
               inherit username;
+              homeDirectory = "/Users/${username}";
               inherit hostname;
             };
           };
-          modules = [
-            ./modules/core.nix
-            ./modules/darwin/system.nix
-            ./modules/host.nix
-            ./modules/darwin/users.nix
-            ./modules/packages.nix
-            ./modules/homebrew.nix
-            home-manager.darwinModules.home-manager {
-              home-manager.verbose = true;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "nix-backup";
-              home-manager.users.${username} = import ./home;
-              home-manager.extraSpecialArgs = {
-                vars = {
-                  inherit username;
-                  inherit hostname;
-                };
-              };
-            }
-          ];
-        };
+        in
+          nix-darwin.lib.darwinSystem {
+            inherit system;
+            inherit specialArgs;
+            modules = [
+              ./modules/core.nix
+              ./modules/host.nix
+              ./modules/packages.nix
+              ./modules/darwin/system.nix
+              ./modules/darwin/users.nix
+              ./modules/darwin/homebrew.nix
+              home-manager.darwinModules.home-manager {
+                home-manager.verbose = true;
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.backupFileExtension = "nix-backup";
+                home-manager.users.${username} = import ./home;
+                home-manager.extraSpecialArgs = specialArgs;
+              }
+            ];
+          };
 
       mkNixosSystem = { system, hostname, username }:
-        lib.nixosSystem {
-          inherit system;
+        let
           specialArgs = {
             vars = {
               inherit username;
+              homeDirectory = "/home/${username}";
               inherit hostname;
             };
           };
-
-          modules = [
-            nixos-wsl.nixosModules.wsl
-            ./modules/nixos/system.nix
-            ./modules/nixos/users.nix
-            ./modules/nixos/programs.nix
-            home-manager.nixosModules.home-manager {
-              home-manager.verbose = true;
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "nix-backup";
-              home-manager.users.${username} = import ./home;
-              home-manager.extraSpecialArgs = {
-                vars = {
-                  inherit username;
-                  inherit hostname;
-                };
-              };
-            }
-          ];
-        };
+        in
+          lib.nixosSystem {
+            inherit system;
+            inherit specialArgs;
+            modules = [
+              nixos-wsl.nixosModules.wsl
+              ./modules/nixos/system.nix
+              ./modules/nixos/users.nix
+              ./modules/nixos/programs.nix
+              home-manager.nixosModules.home-manager {
+                home-manager.verbose = true;
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.backupFileExtension = "nix-backup";
+                home-manager.users.${username} = import ./home;
+                home-manager.extraSpecialArgs = specialArgs;
+              }
+            ];
+          };
 
       shellHook = ''
         # If not already running Fish, replace the shell with Fish
@@ -99,11 +97,6 @@
           system = "x86_64-darwin";
           hostname = "jozibean";
           username = "mjcramer";
-        };
-        "cramer-adobe-macbook" = mkDarwinSystem { 
-          system = "aarch64-darwin";
-          hostname = "cramer-adobe-macbook";
-          username = "micramer";
         };
       };
         

@@ -16,10 +16,6 @@
     grc # generic text colorize
     htop
     iftop
-    jq # json query
-    lsd # much better ls
-    neovim # modern vim 
-    nil # nix language server
     nmap # networking tool
     openssh
     python3
