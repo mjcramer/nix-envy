@@ -140,8 +140,8 @@ in {
   # '';
 
   # We need to run tide configure after activation to set up our prompts
-  home.activation.configureTide = lib.hm.dag.entryAfter ["linkGeneration"] ''
-    echo "Running tide configure..."
-    ${pkgs.fish}/bin/fish --login -c "if set -q tide_configured; ${tideConfigure}; set -Ux tide_configured true; else; echo Tide already configured; end"
+  home.activation.configureTide = lib.hm.dag.entryAfter ["installPackages"] ''
+    echo -e "\nTo set up your tide prompt, please run the following command in your fish shell...\n"
+    echo -e "${tideConfigure}\n"
   '';
 }

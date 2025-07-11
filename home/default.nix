@@ -3,7 +3,9 @@
 let 
   # Pass in username and hostname 
   username = vars.username;
+  homeDirectory = vars.homeDirectory;
   hostname = vars.hostname;
+
   # Directory containing dotfiles that aren't managed by nix
   dotfilesDir = ./dotfiles;
   dotfileNames = builtins.attrNames (builtins.readDir dotfilesDir);
@@ -24,7 +26,8 @@ let
 in {
   home = {
     inherit username;
-    homeDirectory = lib.mkDefault "/Users/${username}";
+    inherit homeDirectory;
+
     # This value determines the Home Manager release that your configuration is
     # compatible with. This helps avoid breakage when a new Home Manager release
     # introduces backwards incompatible changes.
@@ -32,7 +35,7 @@ in {
     # You should not change this value, even if you update Home Manager. If you do
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
-    stateVersion = "25.05";
+    stateVersion = "24.05";
   
     # Management of dotfiles and templates
     file = dotfiles // templates; 
@@ -41,52 +44,26 @@ in {
     packages = with pkgs; [
       # This is what we are going to use for templating
       copier
+      # This is required for fish shell
+      grc
+      jq # json query
+      lsd # much better ls
+#      neovim # modern vim
+      nil # nix language server
       openssh 
       nerd-fonts.meslo-lg
       fd # more better find for activation scripts
-      kubectl
-    #  karabiner-elements # device (keyboard, mouse, etc.) mapping
-    # scala
-    # sbt
-    # maven
-    # terraform
-    # protobuf
-    # tmux
-    # tree
-    # awscli2
-    # google-cloud-sdk
-    # coursier
-    # jetbrains.idea-ultimate
-    # (vscode-with-extensions.override {
-    #   vscodeExtensions = with vscode-extensions; [
-    #     bbenoist.nix
-    #     ms-python.python
-    #     ms-azuretools.vscode-docker
-    #     ms-vscode-remote.remote-ssh
-    #   ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-    #     {
-    #       name = "remote-ssh-edit";
-    #       publisher = "ms-vscode-remote";
-    #       version = "0.47.2";
-    #       sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
-    #     }
-    #   ];
-    # })
-#    corretto11
-#    corretto17
-#    corretto21
-#    jdk11
-#    jdk17
-    # jdk21
-#    vscode
+      tree
+      # Build tooling needs to be here for global reference
+      maven
+      sbt
+      gradle
     ];
 
     # Set environment/session variables
     sessionVariables = {
-      EDITOR = "vim";
+      EDITOR = "nvim";
     };
-
-    # activation.setWallpaper = lib.hm.dag.entryAfter ["linkGeneration"] (builtins.readFile ./helpers/set-wallpapers.sh);
 
     activation.generateSSHKey = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ ! -f ~/.ssh/id_ed25519 ]; then
@@ -104,7 +81,8 @@ in {
 
   imports = [
     ./programs/fish.nix
-    ./programs/zsh.nix
+    # TODO: Fix broken zsh on wsl
+#    ./programs/zsh.nix
     ./programs/direnv.nix
     ./programs/git.nix
     ./programs/htop.nix
