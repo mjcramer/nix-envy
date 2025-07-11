@@ -1,6 +1,7 @@
 
 # Nix artifacts
 result
+.direnv
 
 # Intellij Idea
 .idea

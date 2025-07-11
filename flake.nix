@@ -107,27 +107,25 @@
           username = "mcramer";
         };
       };
+    } // flake-utils.lib.eachDefaultSystem (system:
+        let
+          pkgs = import nixpkgs {
+            inherit system;
+          };
+        in {
+          devShells.default = pkgs.mkShell {
+            name = "nix-envy";
 
-# flake-utils.lib.eachDefaultSystem (system:
-#        devShells = {
-#          default = pkgs.mkShell {
-#            buildInputs = [
-#              pkgs.jdk21       # Java 8
-#              pkgs.scala_3
-#            ];
-#            inherit shellHook;
-#          };
-#          nexus-meta = pkgs.mkShell {
-#            buildInputs = [
-#              pkgs.openjdk8       # Java 8
-#              pkgs.scala_2_12     # Scala 2.12
-#            ];
-#            inherit shellHook;
-#          };
-#        };
-      # }
-    # );
-  };
+            buildInputs = with pkgs; [
+              gh
+            ];
+
+            shellHook = ''
+              echo "Created ${system} devShell for nix-envy"
+            '';
+          };
+        }
+      );
 }
 
 
