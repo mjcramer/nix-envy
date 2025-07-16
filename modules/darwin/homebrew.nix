@@ -36,6 +36,7 @@
       "beyond-compare"
       "intellij-idea"
       "visual-studio-code"
+      "docker-desktop"
     ];
 
     brews = [ 
