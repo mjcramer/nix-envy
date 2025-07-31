@@ -45,6 +45,7 @@ in {
       # This is what we are going to use for templating
       copier
       # This is required for fish shell
+      fzf
       grc
       jq # json query
       lsd # much better ls
@@ -54,10 +55,6 @@ in {
       nerd-fonts.meslo-lg
       fd # more better find for activation scripts
       tree
-      # Build tooling needs to be here for global reference
-      maven
-      sbt
-      gradle
     ];
 
     # Set environment/session variables
@@ -80,6 +77,7 @@ in {
   programs.home-manager.enable = true;
 
   imports = [
+    ./programs/bash.nix
     ./programs/fish.nix
     # TODO: Fix broken zsh on wsl
 #    ./programs/zsh.nix
