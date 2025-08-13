@@ -1,9 +1,10 @@
 
 dependencyUpdatesFilter -= moduleFilter(organization = "org.scala-lang")
 
-//import com.scalapenos.sbt.prompt._
-//import SbtPrompt.autoImport._
-//
+import com.scalapenos.sbt.prompt.SbtPrompt.autoImport._
+
+promptTheme := com.scalapenos.sbt.prompt.PromptThemes.ScalapenosTheme
+
 //promptTheme := PromptTheme(
 //  List(
 //    text("sbt", fg(15).bg(0)),
