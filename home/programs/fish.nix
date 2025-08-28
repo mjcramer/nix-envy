@@ -108,17 +108,15 @@ in {
       # Key bindings
       bind \e\x7f backward-kill-word
 
-      # Enable fish to read .envrc on changing directory 
-      direnv hook fish | source
-      # But not on any arrow key navigation
-      set -g direnv_fish_mode disable_arrow
-
       # Set up docker completion
-      if command -q docker 
+      if command -q docker
         if [ ! -f ~/.config/fish/completions/docker.fish ]
 	        docker completion fish > ~/.config/fish/completions/docker.fish
-        end  
+        end
       end
+
+      # nix-direnv will add the `direnv hook fish | source` line, but this disables arrow key navigation
+      set -g direnv_fish_mode disable_arrow
     '';
 
     shellInitLast = ''

@@ -23,6 +23,7 @@ let
       recursive = true;
     };
   };
+  isWSL = builtins.pathExists /proc/sys/fs/binfmt_misc/WSLInterop;
 in {
   home = {
     inherit username;
@@ -36,9 +37,9 @@ in {
     # want to update the value, then make sure to first check the Home Manager
     # release notes.
     stateVersion = "24.05";
-  
+
     # Management of dotfiles and templates
-    file = dotfiles // templates; 
+    file = dotfiles // templates;
 
     # The home.packages option allows you to install Nix packages into your environment.
     packages = with pkgs; [
@@ -49,13 +50,20 @@ in {
       grc
       jq # json query
       lsd # much better ls
-#      neovim # modern vim
       nil # nix language server
-      openssh 
+      openssh
       nerd-fonts.meslo-lg
       fd # more better find for activation scripts
       tree
+      unzip
+      wslu
     ];
+#    lib.optionals (!isWSL) [
+#      neovim
+#    ] ++
+#    lib.optionals isWSL [
+#      wslu
+#    ];
 
     # Set environment/session variables
     sessionVariables = {
