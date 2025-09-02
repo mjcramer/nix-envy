@@ -56,14 +56,13 @@ in {
       fd # more better find for activation scripts
       tree
       unzip
-      wslu
-    ];
+    ] ++
 #    lib.optionals (!isWSL) [
 #      neovim
 #    ] ++
-#    lib.optionals isWSL [
-#      wslu
-#    ];
+    lib.optionals isWSL [
+      wslu
+    ];
 
     # Set environment/session variables
     sessionVariables = {
@@ -80,19 +79,20 @@ in {
   };
 
   fonts.fontconfig.enable = true;
-  
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
   imports = [
     ./programs/bash.nix
     ./programs/fish.nix
-    # TODO: Fix broken zsh on wsl
-#    ./programs/zsh.nix
     ./programs/direnv.nix
     ./programs/git.nix
     ./programs/htop.nix
     ./programs/vim.nix
     ./scripts.nix
+  ] ++
+  lib.optionals (!isWSL) [
+    ./programs/zsh.nix
   ];
 }
